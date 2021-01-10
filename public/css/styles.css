@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+body,
+html {
+  height: 100%;
+}
+
+#bg {
+  background-image: url("../img/cloudy.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 0rem !important;
+}
+
+/* Main */
+#temperature {
+  font-size: 3em;
+  font-weight: 600;
+}
+
+#city {
+  font-size: 2em;
+}
+
+/* Side */
+aside {
+  background-color: rgba(22, 40, 64, 0.7);
+  backdrop-filter: blur(6px);
+}
