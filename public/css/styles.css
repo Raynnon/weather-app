@@ -1,5 +1,18 @@
+/*@import "../node_modules/bootstrap/scss/bootstrap";*/
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+/*$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);*/
 
 body,
 html {
@@ -7,7 +20,6 @@ html {
 }
 
 #bg {
-  background-image: url("../img/cloudy.jpg");
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -16,6 +28,7 @@ html {
 
 h1 {
   font-family: "Montserrat Alternates", sans-serif;
+  text-shadow: 2px 2px #333;
 }
 
 p {
@@ -35,8 +48,26 @@ p {
   font-size: 2em;
 }
 
+#weather-icon {
+  width: 72px;
+}
+
+.details {
+  background-color: rgba(51, 51, 51, 0.7);
+}
+
 /* Side */
 aside {
-  background-color: rgba(22, 40, 64, 0.7);
+  background-color: rgba(0, 55, 72, 0.8);
   backdrop-filter: blur(6px);
+}
+
+.form-control {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border-bottom: 1px solid #6c757d !important;
+}
+
+#search {
+  background-color: #ff7e00;
+  border: none;
 }
