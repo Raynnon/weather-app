@@ -27,6 +27,12 @@ const weather = (city, callback) => {
         temperature: Math.round(body.data[0].temp),
         icon,
         localTime: body.data[0].datetime,
+        windSpeed: Math.round(body.data[0].wind_spd),
+        windDirection: body.data[0].wind_cdir_full,
+        countryCode: body.data[0].country_code,
+        pressure: Math.round(body.data[0].pres),
+        uvIndex: Math.round(body.data[0].uv),
+        precip: Math.round(body.data[0].precip),
       });
     }
   });

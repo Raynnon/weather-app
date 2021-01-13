@@ -21,7 +21,21 @@ app.get("/", (req, res) => {
 
   weather(
     location,
-    (error, { description, temperature, icon, localTime, bgURL } = {}) => {
+    (
+      error,
+      {
+        description,
+        temperature,
+        icon,
+        localTime,
+        windSpeed,
+        windDirection,
+        countryCode,
+        pressure,
+        uvIndex,
+        precip,
+      } = {}
+    ) => {
       if (error) {
         console.log(error);
       } else {
@@ -36,6 +50,12 @@ app.get("/", (req, res) => {
               localTime,
               icon,
               bgURL,
+              windSpeed,
+              windDirection,
+              countryCode,
+              pressure,
+              uvIndex,
+              precip,
             });
           }
         });
@@ -55,7 +75,21 @@ app.post("/search", (req, res) => {
 
   weather(
     location,
-    (error, { description, temperature, icon, localTime, bgURL } = {}) => {
+    (
+      error,
+      {
+        description,
+        temperature,
+        icon,
+        localTime,
+        windSpeed,
+        windDirection,
+        countryCode,
+        pressure,
+        uvIndex,
+        precip,
+      } = {}
+    ) => {
       if (error) {
         console.log(error);
       } else {
@@ -70,6 +104,12 @@ app.post("/search", (req, res) => {
               localTime,
               icon,
               bgURL,
+              windSpeed,
+              windDirection,
+              countryCode,
+              pressure,
+              uvIndex,
+              precip,
             });
           }
         });

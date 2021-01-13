@@ -27,7 +27,7 @@
               </div>
               <div class="col-xl-3 col-md-7 details">
                 <div class="row">
-                  <p id="city"><%= location %></p>
+                  <p id="city"><%= location %>, <%= countryCode %> </p>
                 </div>
                 <div class="row">
                   <p><%= localTime %></p>
@@ -47,8 +47,8 @@
         
           <aside class="col-4">
 
-            <form action="/search" method="POST" class="row">
-              <div class="col-9">
+            <form action="/search" method="POST" class="row pb-5">
+              <div class="col-8 offset-1">
                   <div class="form-group">
                     <label for="location"></label>
                     <input type="text" class="form-control shadow-none border-start-0 border-top-0 border-end-0 rounded-0 text-light" id="location" name="location" placeholder="Location">
@@ -61,7 +61,101 @@
               </button>
             </form>
 
-            <h2 class="text-light pt-5">Weather details</h2>
+            <div class="text-light aside-elem pb-5">
+              <div class="row pb-4 pt-5">
+                <div class="col-10 offset-1">
+                  <h2 class="text-white">Weather details</h2>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Pressure</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p><%= pressure %> hpa</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>UV Index</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p><%= uvIndex %></p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Precipitations</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p><%= precip %> mm/hr</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Wind Speed</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p><%= windSpeed %> m/s</p>
+                </div>
+              </div>   
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Wind Direction</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p><%= windDirection %></p>
+                </div>
+              </div>                 
+            </div>
+
+            <div class="text-light">
+              <div class="row pb-4 pt-5">
+                <div class="col-10 offset-1">
+                  <h2 class="text-white">Forecast</h2>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Tuesday</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>86%</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Wednesday</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>86%</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Thursday</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>86%</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Saturday</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>86%</p>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>Friday</p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>86%</p>
+                </div>
+              </div>
+            </div>
 
           </aside>
         </div>
