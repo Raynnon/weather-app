@@ -14,11 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
-  const geo = geoip.lookup(ip);
-  const location = geo.city;
-
+const meteo = (location, res) => {
   weather(
     location,
     (
@@ -43,7 +39,7 @@ app.get("/", (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            res.render("index", {
+            return res.render("index", {
               location,
               description,
               temperature,
@@ -62,6 +58,14 @@ app.get("/", (req, res) => {
       }
     }
   );
+};
+
+app.get("/", (req, res) => {
+  const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
+  const geo = geoip.lookup(ip);
+  const location = geo.city;
+
+  meteo(location, res);
 });
 
 app.post("/search", (req, res) => {
@@ -73,49 +77,7 @@ app.post("/search", (req, res) => {
     location = geo.city;
   }
 
-  weather(
-    location,
-    (
-      error,
-      {
-        description,
-        temperature,
-        icon,
-        localTime,
-        windSpeed,
-        windDirection,
-        countryCode,
-        pressure,
-        uvIndex,
-        precip,
-      } = {}
-    ) => {
-      if (error) {
-        console.log(error);
-      } else {
-        cityImg(location, (error, { bgURL }) => {
-          if (error) {
-            console.log(error);
-          } else {
-            res.render("index", {
-              location,
-              description,
-              temperature,
-              localTime,
-              icon,
-              bgURL,
-              windSpeed,
-              windDirection,
-              countryCode,
-              pressure,
-              uvIndex,
-              precip,
-            });
-          }
-        });
-      }
-    }
-  );
+  meteo(location, res);
 });
 
 app.get("/help", (req, res) => {
