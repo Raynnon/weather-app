@@ -2,11 +2,9 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const ejs = require("ejs");
 var geoip = require("geoip-lite");
 
-const { weather } = require("./controllers/weatherbit");
-const { cityImg } = require("./controllers/unsplash");
+const { weatherRender } = require("./controllers/weatherRender");
 
 const app = express();
 
@@ -14,58 +12,12 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const meteo = (location, res) => {
-  weather(
-    location,
-    (
-      error,
-      {
-        description,
-        temperature,
-        icon,
-        localTime,
-        windSpeed,
-        windDirection,
-        countryCode,
-        pressure,
-        uvIndex,
-        precip,
-      } = {}
-    ) => {
-      if (error) {
-        console.log(error);
-      } else {
-        cityImg(location, (error, { bgURL }) => {
-          if (error) {
-            console.log(error);
-          } else {
-            return res.render("index", {
-              location,
-              description,
-              temperature,
-              localTime,
-              icon,
-              bgURL,
-              windSpeed,
-              windDirection,
-              countryCode,
-              pressure,
-              uvIndex,
-              precip,
-            });
-          }
-        });
-      }
-    }
-  );
-};
-
 app.get("/", (req, res) => {
   const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
   const geo = geoip.lookup(ip);
   const location = geo.city;
 
-  meteo(location, res);
+  weatherRender(location, res);
 });
 
 app.post("/search", (req, res) => {
@@ -76,8 +28,7 @@ app.post("/search", (req, res) => {
     const geo = geoip.lookup(ip);
     location = geo.city;
   }
-
-  meteo(location, res);
+  weatherRender(location, res);
 });
 
 app.get("/help", (req, res) => {
@@ -100,5 +51,3 @@ const port = 3000;
 app.listen(port, () => {
   console.log("Server listening on port", port);
 });
-
-// https://api.teleport.org/api/urban_areas/slug:barcelona/images/
