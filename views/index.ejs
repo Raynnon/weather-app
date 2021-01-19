@@ -16,29 +16,29 @@
     <div 
       id="bg" 
       class="container-fluid" 
-      style="background-image: url('<%= bgURL %>');">
+      style="background-image: url('<%= background %>');">
         <div class="row h-100">
           <div class="col-8 p-5 d-flex flex-column justify-content-between">
             <h1 class="text-white">The Weather App</h1>
             
             <div class="row pb-5 text-center">
               <div class="col-xl-2 col-md-7 details">
-                <p id="temperature"><%= temperature %>ºC</p>
+                <p id="temperature"><%= current.temperature %>ºC</p>
               </div>
               <div class="col-xl-3 col-md-7 details">
                 <div class="row">
-                  <p id="city"><%= location %>, <%= countryCode %> </p>
+                  <p id="city"><%= daily.today.location %>, <%= current.countryCode %> </p>
                 </div>
                 <div class="row">
-                  <p><%= localTime %></p>
+                  <p><%= daily.today.date %></p>
                 </div>
               </div>
               <div class="col-xl-2 col-md-7 details">
                 <div class="row">
-                  <img id="weather-icon" src="<%= icon %>" class="mx-auto" alt="<%= description %>" />
+                  <img id="weather-icon" src="<%= current.icon %>" class="mx-auto" alt="<%= current.description %>" />
                 </div>
                 <div class="row">
-                  <p><%= description %></p>
+                  <p><%= current.description %></p>
                 </div>             
               </div>
               <div class="col-auto"></div>
@@ -62,9 +62,23 @@
             </form>
 
             <div class="text-light aside-elem pb-5">
-              <div class="row pb-4 pt-5">
+              <div class="row pb-4">
                 <div class="col-10 offset-1">
                   <h2 class="text-white">Weather details</h2>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col-5 offset-1">
+                  <p>
+                    <img class="sun" src="..\img\sunrise.webp" alt="sunrise" />
+                    <%= current.sunrise %>
+                  </p>
+                </div>
+                <div class="col-5 text-end">
+                  <p>
+                    <img class="sun" src="..\img\sunset.webp" alt="sunset" />
+                    <%= current.sunset %>
+                  </p>
                 </div>
               </div>
               <div class="row pb-3">
@@ -72,7 +86,7 @@
                   <p>Pressure</p>
                 </div>
                 <div class="col-5 text-end">
-                  <p><%= pressure %> hpa</p>
+                  <p><%= current.pressure %> hpa</p>
                 </div>
               </div>
               <div class="row pb-3">
@@ -80,7 +94,7 @@
                   <p>UV Index</p>
                 </div>
                 <div class="col-5 text-end">
-                  <p><%= uvIndex %></p>
+                  <p><%= current.uvIndex %></p>
                 </div>
               </div>
               <div class="row pb-3">
@@ -88,7 +102,7 @@
                   <p>Precipitations</p>
                 </div>
                 <div class="col-5 text-end">
-                  <p><%= precip %> mm/hr</p>
+                  <p><%= current.precip %> mm/hr</p>
                 </div>
               </div>
               <div class="row pb-3">
@@ -96,7 +110,7 @@
                   <p>Wind Speed</p>
                 </div>
                 <div class="col-5 text-end">
-                  <p><%= windSpeed %> m/s</p>
+                  <p><%= current.windSpeed %> m/s</p>
                 </div>
               </div>   
               <div class="row pb-3">
@@ -104,7 +118,7 @@
                   <p>Wind Direction</p>
                 </div>
                 <div class="col-5 text-end">
-                  <p><%= windDirection %></p>
+                  <p><%= current.windDirection %></p>
                 </div>
               </div>                 
             </div>
@@ -116,50 +130,23 @@
                 </div>
               </div>
               <div class="row pb-3">
-                <div class="col-5 offset-1">
-                  <p>Tuesday</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p>86%</p>
-                </div>
-              </div>
-              <div class="row pb-3">
-                <div class="col-5 offset-1">
-                  <p>Wednesday</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p>86%</p>
-                </div>
-              </div>
-              <div class="row pb-3">
-                <div class="col-5 offset-1">
-                  <p>Thursday</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p>86%</p>
-                </div>
-              </div>
-              <div class="row pb-3">
-                <div class="col-5 offset-1">
-                  <p>Saturday</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p>86%</p>
-                </div>
-              </div>
-              <div class="row pb-3">
-                <div class="col-5 offset-1">
-                  <p>Friday</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p>86%</p>
-                </div>
+                <% 
+                  for (let i = 1; i < 6; i++) { %>
+                    <div class="col-5 offset-1">
+                        <p><%= daily["D" + i].date %></p>
+                    </div>
+                    <div class="col-5 text-end">
+                      <p>
+                        <%= daily["D" + i].temperature %>ºC
+                        <img class="sun" src=<%= daily["D" + i].icon %> alt="sunset" />
+                      </p>
+                    </div>
+                  <%}
+                %>
               </div>
             </div>
-
           </aside>
         </div>
     </div>
-		
   </body>
 </html>

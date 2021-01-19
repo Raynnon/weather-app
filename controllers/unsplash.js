@@ -1,6 +1,6 @@
-const request = require("postman-request");
+const fetch = require("node-fetch");
 
-const cityImg = (city, callback) => {
+const cityImg = async (city) => {
   const key = "3O7w55JwDJSzQSiKKMRiElZ0GjEATt7P4A5h2cRYOBc";
   const url =
     "https://api.unsplash.com/search/photos?page=1&query=" +
@@ -8,15 +8,18 @@ const cityImg = (city, callback) => {
     "&orientation=landscape&client_id=" +
     key;
 
-  request({ url, json: true }, (error, { body }) => {
-    if (error) {
-      callback(error, undefined);
-    } else if (!body.results[0]) {
-      callback(undefined, { bgURL: "../img/cloudy.jpg" });
+  try {
+    let response = await fetch(url);
+    let json = await response.json();
+
+    if (!json.results[0]) {
+      return "../img/cloudy.jpg";
     } else {
-      callback(undefined, { bgURL: body.results[0].urls.raw });
+      return json.results[0].urls.raw;
     }
-  });
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 module.exports.cityImg = cityImg;

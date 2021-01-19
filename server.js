@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 
 var geoip = require("geoip-lite");
 
-const { weatherRender } = require("./controllers/weatherRender");
+//const { weatherRender } = require("./controllers/weatherRender");
+const { weather } = require("./controllers/weatherbit");
+const { cityImg } = require("./controllers/unsplash");
 
 const app = express();
 
@@ -17,7 +19,16 @@ app.get("/", (req, res) => {
   const geo = geoip.lookup(ip);
   const location = geo.city;
 
-  weatherRender(location, res);
+  const rendering = async () => {
+    const forecast = await weather(location);
+    const current = forecast.current;
+    const daily = forecast.daily;
+    const background = await cityImg(location);
+
+    res.render("index", { current, daily, background });
+  };
+
+  rendering();
 });
 
 app.post("/search", (req, res) => {
@@ -28,7 +39,17 @@ app.post("/search", (req, res) => {
     const geo = geoip.lookup(ip);
     location = geo.city;
   }
-  weatherRender(location, res);
+
+  const rendering = async () => {
+    const forecast = await weather(location);
+    const current = forecast.current;
+    const daily = forecast.daily;
+    const background = await cityImg(location);
+
+    res.render("index", { current, daily, background });
+  };
+
+  rendering();
 });
 
 app.get("/help", (req, res) => {
