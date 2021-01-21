@@ -12,20 +12,18 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <div 
-      id="bg" 
-      class="container-fluid" 
-      style="background-image: url('<%= background %>');">
+  <body class="container-fluid" style="background-image: url('<%= background %>');">
+    <div>
         <div class="row h-100">
-          <div class="col-8 p-5 d-flex flex-column justify-content-between">
+          <main class="col-12 col-lg-8 p-5">
             <h1 class="text-white">The Weather App</h1>
+            <sub class="text-white">By Florian Assante - 2021</sub>
             
-            <div class="row pb-5 text-center">
-              <div class="col-xl-2 col-md-7 details">
+            <div id="details" class="row text-center mt-5">
+              <div class="col-12 col-lg-12 col-xl-3 my-auto">
                 <p id="temperature"><%= current.temperature %>ºC</p>
               </div>
-              <div class="col-xl-3 col-md-7 details">
+              <div class="col-12 col-lg-12 col-xl-6 my-auto">
                 <div class="row">
                   <p id="city"><%= daily.today.location %>, <%= current.countryCode %> </p>
                 </div>
@@ -33,7 +31,7 @@
                   <p><%= daily.today.date %></p>
                 </div>
               </div>
-              <div class="col-xl-2 col-md-7 details">
+              <div class="col-12 col-lg-12 col-xl-3 my-auto">
                 <div class="row">
                   <img id="weather-icon" src="<%= current.icon %>" class="mx-auto" alt="<%= current.description %>" />
                 </div>
@@ -41,11 +39,10 @@
                   <p><%= current.description %></p>
                 </div>             
               </div>
-              <div class="col-auto"></div>
             </div>
-          </div>
+          </main>
         
-          <aside class="col-4">
+          <aside class="col-12 col-lg-4">
 
             <form action="/search" method="POST" class="row pb-5">
               <div class="col-8 offset-1">
@@ -129,17 +126,19 @@
                   <h2 class="text-white">Forecast</h2>
                 </div>
               </div>
-              <div class="row pb-3">
+              
                 <% 
                   for (let i = 1; i < 6; i++) { %>
-                    <div class="col-5 offset-1">
-                        <p><%= daily["D" + i].date %></p>
-                    </div>
-                    <div class="col-5 text-end">
-                      <p>
-                        <%= daily["D" + i].temperature %>ºC
-                        <img class="sun" src=<%= daily["D" + i].icon %> alt="sunset" />
-                      </p>
+                    <div class="row pb-3">
+                      <div class="col-5 offset-1 my-auto">
+                          <p><%= daily["D" + i].date %></p>
+                      </div>
+                      <div class="col-5 text-end">
+                        <p>
+                          <%= daily["D" + i].temperature %>ºC
+                          <img class="sun" src=<%= daily["D" + i].icon %> alt="sunset" />
+                        </p>
+                      </div>
                     </div>
                   <%}
                 %>

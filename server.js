@@ -14,21 +14,16 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
   const geo = geoip.lookup(ip);
   const location = geo.city;
+  const forecast = await weather(location);
+  const current = forecast.current;
+  const daily = forecast.daily;
+  const background = await cityImg(location);
 
-  const rendering = async () => {
-    const forecast = await weather(location);
-    const current = forecast.current;
-    const daily = forecast.daily;
-    const background = await cityImg(location);
-
-    res.render("index", { current, daily, background });
-  };
-
-  rendering();
+  res.render("index", { current, daily, background });
 });
 
 app.post("/search", (req, res) => {
