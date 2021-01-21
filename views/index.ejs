@@ -50,6 +50,9 @@
                     <label for="location"></label>
                     <input type="text" class="form-control shadow-none border-start-0 border-top-0 border-end-0 rounded-0 text-light" id="location" name="location" placeholder="Location">
                   </div>
+                  <% if(daily.error) { %>
+                    <p class="text-danger mt-1"><%= daily.error %></p>
+                  <% } %>
               </div>
               <button type="submit" id="search" class="col-2 offset-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -126,9 +129,9 @@
                   <h2 class="text-white">Forecast</h2>
                 </div>
               </div>
-              
                 <% 
-                  for (let i = 1; i < 6; i++) { %>
+                  if(daily.D1) { %>
+                    <% for (let i = 1; i < 6; i++) { %>
                     <div class="row pb-3">
                       <div class="col-5 offset-1 my-auto">
                           <p><%= daily["D" + i].date %></p>
@@ -141,7 +144,7 @@
                       </div>
                     </div>
                   <%}
-                %>
+                  }%>              
               </div>
             </div>
           </aside>

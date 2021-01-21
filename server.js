@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 
 var geoip = require("geoip-lite");
 
-//const { weatherRender } = require("./controllers/weatherRender");
 const { weather } = require("./controllers/weatherbit");
 const { cityImg } = require("./controllers/unsplash");
 
@@ -26,7 +25,7 @@ app.get("/", async (req, res) => {
   res.render("index", { current, daily, background });
 });
 
-app.post("/search", (req, res) => {
+app.post("/search", async (req, res) => {
   let location = req.body.location;
 
   if (!location) {
@@ -35,32 +34,16 @@ app.post("/search", (req, res) => {
     location = geo.city;
   }
 
-  const rendering = async () => {
-    const forecast = await weather(location);
-    const current = forecast.current;
-    const daily = forecast.daily;
-    const background = await cityImg(location);
+  const forecast = await weather(location);
+  const current = forecast.current;
+  const daily = forecast.daily;
+  const background = await cityImg(location);
 
-    res.render("index", { current, daily, background });
-  };
-
-  rendering();
+  res.render("index", { current, daily, background });
 });
 
-app.get("/help", (req, res) => {
-  res.render("help");
-});
-
-app.get("/about", (req, res) => {
-  res.render("about");
-});
-
-app.get("/weather", (req, res) => {
-  res.send({
-    city: "Barcelona",
-    weather: "rainy",
-    temperature: 7,
-  });
+app.use((req, res, next) => {
+  res.status(404).render("404");
 });
 
 const port = 3000;

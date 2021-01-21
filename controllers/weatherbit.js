@@ -25,6 +25,7 @@ const currentWeather = async (city) => {
         ".png";
 
       const weatherForecast = {
+        error: "",
         description: json.data[0].weather.description,
         temperature: Math.round(json.data[0].temp),
         icon,
@@ -41,8 +42,22 @@ const currentWeather = async (city) => {
       return weatherForecast;
     }
   } catch (e) {
-    console.log(e);
-    return Error("Unable to connect to weather service!");
+    const weatherForecast = {
+      error: "Unable to connect to weather service!",
+      description: "",
+      temperature: "",
+      icon: "",
+      windSpeed: "",
+      windDirection: "",
+      countryCode: "",
+      pressure: "",
+      uvIndex: "",
+      precip: "",
+      sunrise: "",
+      sunset: "",
+    };
+
+    return weatherForecast;
   }
 };
 
@@ -62,33 +77,37 @@ const dailyWeather = async (city) => {
     let response = await fetch(url);
     let json = await response.json();
 
-    if (response.status === 204) {
-      return Error("Please choose an existing city");
-    } else {
-      const iconURL = "https://www.weatherbit.io/static/img/icons/";
+    const iconURL = "https://www.weatherbit.io/static/img/icons/";
 
-      const weatherForecast = {
-        today: {
-          date: json.data[0].valid_date,
-          location,
-        },
+    const weatherForecast = {
+      error: "",
+      today: {
+        date: json.data[0].valid_date,
+        location,
+      },
+    };
+
+    for (let i = 1; i <= 6; i++) {
+      const weatherKey = "D" + i;
+
+      weatherForecast[weatherKey] = {
+        date: json.data[i].valid_date,
+        icon: iconURL + json.data[i].weather.icon + ".png",
+        temperature: Math.round(json.data[i].temp),
       };
-
-      for (let i = 1; i <= 6; i++) {
-        const weatherKey = "D" + i;
-
-        weatherForecast[weatherKey] = {
-          date: json.data[i].valid_date,
-          icon: iconURL + json.data[i].weather.icon + ".png",
-          temperature: Math.round(json.data[i].temp),
-        };
-      }
-
-      return weatherForecast;
     }
+
+    return weatherForecast;
   } catch (e) {
-    console.log(e);
-    return Error("Unable to connect to weather service!");
+    const weatherForecast = {
+      error: "Please enter a correct location!",
+      today: {
+        date: "",
+        location,
+      },
+    };
+
+    return weatherForecast;
   }
 };
 
