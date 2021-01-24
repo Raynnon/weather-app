@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
-  const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const geo = geoip.lookup(ip);
   const location = geo.city;
   const forecast = await weather(location);
@@ -29,7 +29,7 @@ app.post("/search", async (req, res) => {
   let location = req.body.location;
 
   if (!location) {
-    const ip = "47.61.63.17"; //req.headers["x-forwarded-for"] || req.connection.remoteAddress
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
     const geo = geoip.lookup(ip);
     location = geo.city;
   }
