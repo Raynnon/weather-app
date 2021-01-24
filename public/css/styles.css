@@ -28,18 +28,17 @@ p {
   margin-bottom: 0rem !important;
 }
 
+aside {
+  overflow: auto;
+  height: 100vh;
+}
+
 @media screen {
   @media (min-width: 992px) and (min-height: 400px) {
     #details {
       position: absolute;
       bottom: 10%;
     }
-
-    aside {
-      overflow: auto;
-      height: 100vh;
-    }
-  }
 
   @media screen and (min-width: 1200px) and (min-height: 282px) {
     #details {
