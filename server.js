@@ -21,6 +21,8 @@ app.get("/", async (req, res) => {
     ip = "37.223.93.222";
   }
 
+  console.log(ip);
+
   const geo = geoip.lookup(ip);
   const location = geo.city;
   const forecast = await weather(location);
