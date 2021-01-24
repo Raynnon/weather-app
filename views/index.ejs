@@ -67,21 +67,21 @@
                   <h2 class="text-white">Weather details</h2>
                 </div>
               </div>
-              <div class="row pb-3">
+              <div class="row pb-1">
                 <div class="col-5 offset-1">
                   <p>
                     <img class="sun" src="..\img\sunrise.webp" alt="sunrise" />
                     <%= current.sunrise %>
                   </p>
                 </div>
-                <div class="col-5 text-end">
+                <div class="col-5 text-end pb-1">
                   <p>
                     <img class="sun" src="..\img\sunset.webp" alt="sunset" />
                     <%= current.sunset %>
                   </p>
                 </div>
               </div>
-              <div class="row pb-3">
+              <div class="row pb-4">
                 <div class="col-5 offset-1">
                   <p>Pressure</p>
                 </div>
@@ -89,7 +89,7 @@
                   <p><%= current.pressure %> hpa</p>
                 </div>
               </div>
-              <div class="row pb-3">
+              <div class="row pb-4">
                 <div class="col-5 offset-1">
                   <p>UV Index</p>
                 </div>
@@ -97,7 +97,7 @@
                   <p><%= current.uvIndex %></p>
                 </div>
               </div>
-              <div class="row pb-3">
+              <div class="row pb-4">
                 <div class="col-5 offset-1">
                   <p>Precipitations</p>
                 </div>
@@ -105,7 +105,7 @@
                   <p><%= current.precip %> mm/hr</p>
                 </div>
               </div>
-              <div class="row pb-3">
+              <div class="row pb-4">
                 <div class="col-5 offset-1">
                   <p>Wind Speed</p>
                 </div>
@@ -113,7 +113,7 @@
                   <p><%= current.windSpeed %> m/s</p>
                 </div>
               </div>   
-              <div class="row pb-3">
+              <div class="row pb-4">
                 <div class="col-5 offset-1">
                   <p>Wind Direction</p>
                 </div>
@@ -132,7 +132,7 @@
                 <% 
                   if(daily.D1) { %>
                     <% for (let i = 1; i < 6; i++) { %>
-                    <div class="row pb-3">
+                    <div class="row pb-1">
                       <div class="col-5 offset-1 my-auto">
                           <p><%= daily["D" + i].date %></p>
                       </div>
