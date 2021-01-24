@@ -14,7 +14,13 @@ app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  let ip = "37.223.93.222";
+
+  if (req.connection.remoteAddress != "::1") {
+    ip = req.connection.remoteAddress;
+  }
+  console.log(req.connection.remoteAddress);
+
   const geo = geoip.lookup(ip);
   const location = geo.city;
   const forecast = await weather(location);
@@ -29,7 +35,13 @@ app.post("/search", async (req, res) => {
   let location = req.body.location;
 
   if (!location) {
-    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    let ip = "37.223.93.222";
+
+    if (req.connection.remoteAddress != "::1") {
+      ip = req.connection.remoteAddress;
+    }
+    console.log(req.connection.remoteAddress);
+
     const geo = geoip.lookup(ip);
     location = geo.city;
   }
