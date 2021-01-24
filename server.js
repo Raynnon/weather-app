@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 var geoip = require("geoip-lite");
+const requestIp = require("request-ip");
 
 const { weather } = require("./controllers/weatherbit");
 const { cityImg } = require("./controllers/unsplash");
@@ -14,12 +15,11 @@ app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
-  let ip = "37.223.93.222";
+  let ip = requestIp.getClientIp(req);
 
-  if (req.connection.remoteAddress != "::1") {
-    ip = req.connection.remoteAddress;
+  if (ip === "::1") {
+    ip = "37.223.93.222";
   }
-  console.log(req.connection.remoteAddress);
 
   const geo = geoip.lookup(ip);
   const location = geo.city;
@@ -35,12 +35,13 @@ app.post("/search", async (req, res) => {
   let location = req.body.location;
 
   if (!location) {
-    let ip = "37.223.93.222";
+    let ip = requestIp.getClientIp(req);
 
-    if (req.connection.remoteAddress != "::1") {
-      ip = req.connection.remoteAddress;
+    if (ip === "::1") {
+      ip = "37.223.93.222";
     }
-    console.log(req.connection.remoteAddress);
+
+    console.log(ip);
 
     const geo = geoip.lookup(ip);
     location = geo.city;

@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "geoip-lite": "^1.4.2",
     "node-fetch": "^2.6.1",
-    "postman-request": "^2.88.1-postman.28"
+    "postman-request": "^2.88.1-postman.28",
+    "request-ip": "^2.1.3"
   }
 }
