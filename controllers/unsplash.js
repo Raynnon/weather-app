@@ -1,7 +1,8 @@
 const fetch = require("node-fetch");
+require("dotenv").config();
 
 const cityImg = async (city) => {
-  const key = "3O7w55JwDJSzQSiKKMRiElZ0GjEATt7P4A5h2cRYOBc";
+  const key = process.env.UNSPLASH_API_KEY;
   const url =
     "https://api.unsplash.com/search/photos?page=1&query=" +
     city +
@@ -15,7 +16,10 @@ const cityImg = async (city) => {
     if (!json.results[0]) {
       return "../img/cloudy.jpg";
     } else {
-      return json.results[0].urls.raw;
+      //Unsplash image compression
+      const options = "&w=1920&auto=format";
+
+      return json.results[0].urls.raw + options;
     }
   } catch (e) {
     console.log(e);

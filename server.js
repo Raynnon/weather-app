@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 var geoip = require("geoip-lite");
 const requestIp = require("request-ip");
@@ -22,7 +23,9 @@ app.get("/", async (req, res) => {
   }
 
   const geo = geoip.lookup(ip);
-  const location = geo.city;
+  let location;
+  geo ? (location = geo.city) : (location = "Barcelona");
+
   const forecast = await weather(location);
   const current = forecast.current;
   const daily = forecast.daily;
@@ -57,7 +60,7 @@ app.use((req, res, next) => {
   res.status(404).render("404");
 });
 
-const port = 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log("Server listening on port", port);
 });

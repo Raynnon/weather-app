@@ -1,7 +1,8 @@
 const fetch = require("node-fetch");
+require("dotenv").config();
 
 let location = "";
-const key = "6e2354a3a7d14505bb1fc4f405c87e61";
+const key = process.env.WEATHERBIT_API_KEY;
 
 //weather current day
 const currentWeather = async (city) => {
