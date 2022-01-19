@@ -11,13 +11,11 @@ const cityImg = async (city) => {
 
   try {
     let response = await axios.get(url);
-    let image = response.data.results[0].urls.regular;
+    let image = response.data.results.length
+      ? response.data.results[0].urls.regular
+      : "../img/cloudy.jpg";
 
-    if (!image) {
-      return "../img/cloudy.jpg";
-    } else {
-      return image;
-    }
+    return image;
   } catch (e) {
     console.log(e);
   }

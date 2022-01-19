@@ -17,13 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   let ip = requestIp.getClientIp(req);
-
-  if (ip === "::1") {
-    ip = "37.223.93.222";
-  }
-
-  const geo = geoip.lookup(ip);
-  let location = geo.city || "";
+  const location = geoip.lookup(ip) ? geoip.lookup(ip).city : "";
 
   const forecast = await weather(location);
   const current = forecast.current;
