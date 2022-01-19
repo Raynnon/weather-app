@@ -19,16 +19,17 @@
             <h1 class="text-white">The Weather App</h1>
             <sub class="text-white">By Florian Assante - 2021</sub>
             
+            <% if (current) { %>
             <div id="details" class="row text-center mt-5">
               <div class="col-12 col-lg-12 col-xl-3 my-auto">
                 <p id="temperature"><%= current.temperature %>ºC</p>
               </div>
               <div class="col-12 col-lg-12 col-xl-6 my-auto">
                 <div class="row">
-                  <p id="city"><%= daily.today.location %>, <%= current.countryCode %> </p>
+                  <p id="city"><%= current.location %>, <%= current.countryCode %> </p>
                 </div>
                 <div class="row">
-                  <p><%= daily.today.date %></p>
+                  <p><%= /* daily.date */ %></p>
                 </div>
               </div>
               <div class="col-12 col-lg-12 col-xl-3 my-auto">
@@ -40,6 +41,8 @@
                 </div>             
               </div>
             </div>
+            <% } %>
+
           </main>
         
           <aside class="col-12 col-lg-4">
@@ -50,8 +53,8 @@
                     <label for="location"></label>
                     <input type="text" class="form-control shadow-none border-start-0 border-top-0 border-end-0 rounded-0 text-light" id="location" name="location" placeholder="Location">
                   </div>
-                  <% if(daily.error) { %>
-                    <p class="text-danger mt-1"><%= daily.error %></p>
+                  <% if(!current) { %>
+                    <p class="text-danger mt-1">Please enter a correct location!</p>
                   <% } %>
               </div>
               <button type="submit" id="search" class="col-2 offset-1">
@@ -61,90 +64,92 @@
               </button>
             </form>
 
-            <div class="text-light aside-elem pb-5">
-              <div class="row pb-4">
-                <div class="col-10 offset-1">
-                  <h2 class="text-white">Weather details</h2>
+            <% if(current) {%>
+              <div class="text-light aside-elem pb-5">
+                <div class="row pb-4">
+                  <div class="col-10 offset-1">
+                    <h2 class="text-white">Weather details</h2>
+                  </div>
                 </div>
+                <div class="row pb-1">
+                  <div class="col-5 offset-1">
+                    <p>
+                      <img class="sun" src="..\img\sunrise.webp" alt="sunrise" />
+                      <%= current.sunrise %>
+                    </p>
+                  </div>
+                  <div class="col-5 text-end pb-1">
+                    <p>
+                      <img class="sun" src="..\img\sunset.webp" alt="sunset" />
+                      <%= current.sunset %>
+                    </p>
+                  </div>
+                </div>
+                <div class="row pb-4">
+                  <div class="col-5 offset-1">
+                    <p>Pressure</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <p><%= current.pressure %> hpa</p>
+                  </div>
+                </div>
+                <div class="row pb-4">
+                  <div class="col-5 offset-1">
+                    <p>UV Index</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <p><%= current.uvIndex %></p>
+                  </div>
+                </div>
+                <div class="row pb-4">
+                  <div class="col-5 offset-1">
+                    <p>Precipitations</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <p><%= current.precip %> mm/hr</p>
+                  </div>
+                </div>
+                <div class="row pb-4">
+                  <div class="col-5 offset-1">
+                    <p>Wind Speed</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <p><%= current.windSpeed %> m/s</p>
+                  </div>
+                </div>   
+                <div class="row">
+                  <div class="col-5 offset-1">
+                    <p>Wind Direction</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <p><%= current.windDirection %></p>
+                  </div>
+                </div>                 
               </div>
-              <div class="row pb-1">
-                <div class="col-5 offset-1">
-                  <p>
-                    <img class="sun" src="..\img\sunrise.webp" alt="sunrise" />
-                    <%= current.sunrise %>
-                  </p>
-                </div>
-                <div class="col-5 text-end pb-1">
-                  <p>
-                    <img class="sun" src="..\img\sunset.webp" alt="sunset" />
-                    <%= current.sunset %>
-                  </p>
-                </div>
-              </div>
-              <div class="row pb-4">
-                <div class="col-5 offset-1">
-                  <p>Pressure</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p><%= current.pressure %> hpa</p>
-                </div>
-              </div>
-              <div class="row pb-4">
-                <div class="col-5 offset-1">
-                  <p>UV Index</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p><%= current.uvIndex %></p>
-                </div>
-              </div>
-              <div class="row pb-4">
-                <div class="col-5 offset-1">
-                  <p>Precipitations</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p><%= current.precip %> mm/hr</p>
-                </div>
-              </div>
-              <div class="row pb-4">
-                <div class="col-5 offset-1">
-                  <p>Wind Speed</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p><%= current.windSpeed %> m/s</p>
-                </div>
-              </div>   
-              <div class="row">
-                <div class="col-5 offset-1">
-                  <p>Wind Direction</p>
-                </div>
-                <div class="col-5 text-end">
-                  <p><%= current.windDirection %></p>
-                </div>
-              </div>                 
-            </div>
 
-            <div class="text-light">
-              <div class="row pb-4 pt-5">
-                <div class="col-10 offset-1">
-                  <h2 class="text-white">Forecast</h2>
+              <div class="text-light">
+                <div class="row pb-4 pt-5">
+                  <div class="col-10 offset-1">
+                    <h2 class="text-white">Forecast</h2>
+                  </div>
                 </div>
-              </div>
-                <% 
-                  if(daily.D1) { %>
-                    <% for (let i = 1; i < 6; i++) { %>
-                    <div class="row pb-1">
-                      <div class="col-5 offset-1 my-auto">
-                          <p><%= daily["D" + i].date %></p>
-                      </div>
-                      <div class="col-5 text-end">
-                        <p>
-                          <%= daily["D" + i].temperature %>ºC
-                          <img class="sun" src=<%= daily["D" + i].icon %> alt="sunset" />
-                        </p>
-                      </div>
+                
+                <% daily.forEach(item => {%>
+                  <div class="row pb-1">
+                    <div class="col-5 offset-1 my-auto">
+                        <p><%= item.date %></p>
                     </div>
-                  <%}
-                  }%>              
+
+                    <div class="col-5 text-end">
+                      <p>
+                        <%= item.temperature %>ºC
+                        <img class="sun" src=<%= item.icon %> alt="sunset" />
+                      </p>
+                    </div>
+                  </div>        
+                  <%}) %> 
+              </div>
+              <% } %>
               </div>
             </div>
           </aside>

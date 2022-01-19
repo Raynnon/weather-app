@@ -1,25 +1,22 @@
-const fetch = require("node-fetch");
+const axios = require("axios");
 require("dotenv").config();
 
 const cityImg = async (city) => {
   const key = process.env.UNSPLASH_API_KEY;
   const url =
-    "https://api.unsplash.com/search/photos?page=1&query=" +
+    "https://api.unsplash.com/search/photos?page=1&per_page=1&orientation=landscape&query=" +
     city +
-    "&orientation=landscape&client_id=" +
+    "&client_id=" +
     key;
 
   try {
-    let response = await fetch(url);
-    let json = await response.json();
+    let response = await axios.get(url);
+    let image = response.data.results[0].urls.regular;
 
-    if (!json.results[0]) {
+    if (!image) {
       return "../img/cloudy.jpg";
     } else {
-      //Unsplash image compression
-      const options = "&w=1920&auto=format";
-
-      return json.results[0].urls.raw + options;
+      return image;
     }
   } catch (e) {
     console.log(e);

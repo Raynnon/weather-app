@@ -23,8 +23,7 @@ app.get("/", async (req, res) => {
   }
 
   const geo = geoip.lookup(ip);
-  let location;
-  geo ? (location = geo.city) : (location = "Barcelona");
+  let location = geo.city || "";
 
   const forecast = await weather(location);
   const current = forecast.current;
@@ -35,23 +34,16 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/search", async (req, res) => {
-  let location = req.body.location;
+  let location = req.body.location || "";
+  const background = (await cityImg(location)) || "./img/cloudy.jpg";
+  let current;
+  let daily;
 
-  if (!location) {
-    let ip = requestIp.getClientIp(req);
-
-    if (ip === "::1") {
-      ip = "37.223.93.222";
-    }
-
-    const geo = geoip.lookup(ip);
-    location = geo.city;
+  if (location) {
+    const forecast = await weather(location);
+    current = forecast.current;
+    daily = forecast.daily;
   }
-
-  const forecast = await weather(location);
-  const current = forecast.current;
-  const daily = forecast.daily;
-  const background = await cityImg(location);
 
   res.render("index", { current, daily, background });
 });
